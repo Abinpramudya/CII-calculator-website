@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ship CII calculator-form</title>
+  <link rel="stylesheet" href="css/calculate.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- form 1-->
+    <form id="ship-data-form">
+      <h2>Ship data</h2>
+
+      <div class="input-group">
+        <label for="Vessel-Name">Vessel-Name</label>
+        <input  id="Vessel-Name" name="Vessel-Name" required>
+      </div>
+
+      <div class="input-group">
+        <label for="vessel-type">vessel-type</label>
+        <select id="vessel-type" name ="vessel-type">
+          <option value="General-Cargo">General Cargo</option>
+          <option value="Bulk-Carrier">Bulk Carrier</option>
+          <option value="Gas-Carrier">Gas-Carrier</option>
+          <option value="Tanker">Tanker</option>
+          <option value="Container-Vessel">Container Vessel</option>
+          <option value="Refrigerated-Cargo-Carrier">Refrigerated Cargo Carrier</option>
+          <option value="Combination-Carrier">Combination Carrier</option>
+          <option value="LNG-Carrier">LNG Carrier</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="LOA">LOA:</label>
+        <input type="number" id="LOA" name="LOA" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="LPP">LPP:</label>
+        <input type="number" id="LPP" name="LPP" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="LoS">LoS:</label> <!-- length overwetted surface -->
+        <input type="number" id="LoS" name="LoS" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="B">B:</label>
+        <input type="number" id="B" name="B" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="T">T:</label>
+        <input type="number" id="T" name="T" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="H">H:</label>
+        <input type="number" id="H" name="H" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="DWT">DWT:</label>
+        <input type="number" id="DWT" name="DWT" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="GT">GT:</label>
+        <input type="number" id="GT" name="GT" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="NT">NT:</label>
+        <input type="number" id="NT" name="NT" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="Displacement">Displacement:</label>
+        <input type="number" id="Displacement" name="Displacement" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="Vs">Vs:</label> <!-- vessel speed-->
+        <input type="number" id="Vs" name="Vs" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="Dprop">D prop:</label> <!-- diameter propeller-->
+        <input type="number" id="Dprop" name="Dprop" required>
+    </div>
+    
+    <div class="input-group">
+      <label for="Nrudder">N rudder:</label>    <!-- jumlah rudder (range 1 - 2)-->
+      <select type = "number" id="Nrudder" name="Nrudder" required>>
+        <option value=1>1 rudder</option>
+        <option value=2>2 rudder</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+        <label for="Nthruster">N thruster:</label> <!-- jumlah thruster (range 0 - 2)-->
+        <input type="number" id="Nthruster" name="Nthruster" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="TA">TA:</label>
+        <input type="number" id="TA" name="TA" required>
+    </div>
+    
+    <div class="input-group">
+        <label for="TF">TF:</label>
+        <input type="number" id="TF" name="TF" required>
+    </div>
+    
+
+      <button type="submit" id="submit-form" onclick="getForm()">Calculate</button>
+
+    </form>
+
+    <!-- form 2-->
+    <form id="machinery-data-form">
+      <h2>Machinery data data</h2>
+      
+      <div class="input-group">
+        <label for="Pme">Pme:</label>
+        <input type="number" id="Pme" required>
+      </div>
+
+      <div class="input-group">
+        <label for="SFOC">SFOC:</label>
+        <input type="number" id="SFOC" required>
+      </div>
+
+      <div class="input-group">
+        <label for="Nprop">Nprop:</label>
+        <input type="number" id="Nprop" required>
+      </div>
+
+      <div class="input-group">
+        <label for="Pservice">Pservice:</label>
+        <input type="number" id="Pservice" required>
+      </div>
+    </form>
+
+  </div>
+
+  <script src="scripts/calculate.js"></script>
+</body>
+</html>

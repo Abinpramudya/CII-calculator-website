@@ -1,98 +1,37 @@
-header {
-    background-color: bisque;
-    display: flex; /* Allow horizontal arrangement of image and navigation */
-    flex-direction: column;
+/* styles.css */
 
-    padding: 10px 20px; /* Optional padding for header content */
-    height: 10vh;
-  }
-  
-  .container {
-    width: 100%;
-    display: flex; /* Make logo and navigation behave as flex items */
-    justify-content: space-between; 
-    align-content: center;
-    align-items: center;   
-    padding-top: 0.5vh;
-}
-  
-  .logo {
-    width: 150px; /* Adjust width as needed */
-    height: auto; /* Maintain image aspect ratio */
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-nav {
-    width: 35vw;
-    display: flex;
-    flex-direction: row-reverse; /* Maintains vertical stacking */
-    align-items: flex-end;
-    align-content: flex-end;
-  }
-  
-    nav ul {
-    width: 35vw;
-    display: flex; /* Makes the list items behave as flex items */
-    flex-direction: row; /* Maintains vertical stacking */
-    justify-content: space-between;
-    /* Optional: Set width to distribute space evenly (adjust as needed) */
-    list-style-type: none;
-    }
-  
-    nav li {
-        /* Set flex-grow to 1 to make items grow and fill available space */
-        background-color: #33ff00; /* Red background color */
-        padding: 10px;
-        border-radius: 5px; /* Add rounded corners */
-        transition: background-color 0.3s ease; /* Smooth transition effect */
-        cursor: pointer; /* Change cursor to pointer on hover */
-      }
-
-      nav li a{
-        color: white;
-      }
-      nav li:hover {
-        background-color: #e00000; /* Darker red on hover */
-        opacity: 0.8; /* Reduce opacity on hover */
-      }
-
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-}
-
-h2 {
-  font-size: 1.5em;
+.input-group {
   margin-bottom: 10px;
 }
 
-p {
-  line-height: 1.5;
+label {
+  display: block;
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-  body {
-    margin: 10px;
-  }
-
-  h2 {
-    font-size: 1.2em;
-  }
+input[type="number"] {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
 
-/* Styles for individual sections */
-#section-1 {
-  background-color: #0088ff; 
-  padding: 15px;    
-  height: 100vh;
+button {
+  padding: 8px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
-#section-2 {
-  background-color: #ffd000;
-  padding: 15px;
-}
-
-#section-3 {
-  background-color: #ff0000;
-  padding: 15px;
+button:hover {
+  background-color: #0056b3;
 }
