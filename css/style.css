@@ -1,37 +1,124 @@
-/* styles.css */
+/* Basic reset styles */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Calibri, sans-serif;
+}
+
+/* Header styling (unchanged) */
+header {
+  background-color: #2196f3; /* Matches the blue navbar color from the image */
+  padding: 20px 0;
+  display: flex; /* Added flexbox for layout */
+  justify-content: space-between; /* Distribute items horizontally */
+  align-items: center; /* Vertically align header elements */
+}
 
 .container {
-  max-width: 400px;
+  max-width: 90%;
   margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: row; /* Maintains row layout for logo and button */
+  justify-content: space-between; /* Distributes logo and button horizontally */
+  
+}
+
+.logo {
+  width: 150px; /* Increased logo width based on the image */
+  height: auto;
+  align-self: center; /* Add space between logo and button */
+}
+
+/* Navigation styling (unchanged) */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav li {
+  margin-right: 20px;
+}
+
+nav a {
+  color: #fff; /* White text color for navbar links */
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 15px;
   border-radius: 5px;
 }
 
-.input-group {
-  margin-bottom: 10px;
+nav a:hover {
+  background-color: #0069d9; /* A slightly darker blue for hover effect */
 }
 
-label {
-  display: block;
-}
-
-input[type="number"] {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
+/* Button styling (unchanged) */
 button {
-  padding: 8px 20px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: maroon;
+  color: white;
+  padding: 10px 20px;
   border: none;
-  border-radius: 3px;
+  border-radius: 5px;
+  font-family: Calibri, sans-serif;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #990000; /* A darker red for button hover */
+}
+
+/* Main section styling */
+main {
+  padding: 0; /* Removed padding to eliminate space between sections */
+  display: flex; /* Make the main container a flexbox */
+  flex-direction: column; /* Stack sections vertically */
+}
+
+#section-1,
+#section-2,
+#section-3 {
+  background-color: #fff; /* Set background color for all sections */
+  padding: 40px; /* Padding for sections */
+  text-align: center; /* Center content within sections */
+  display: flex; /* Make each section a flexbox */
+  flex-direction: column; /* Vertically center content within sections */
+  justify-content: center; /* Center content along the main axis */
+  align-items: center; /* Horizontally center content */
+}
+
+#section-1 {
+  background-color: #003366; /* Light navy background for section-1 */
+  padding: 40px; /* Maintained padding for content within section-1 */
+  text-align: center; /* Text aligned to the left */
+  color: white; /* Text color set to white */
+  height: 76vh;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .container {
+    flex-direction: column; /* Stack logo and button vertically on small screens */
+  }
+
+  nav ul {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav li {
+    margin: 10px 0;
+  }
 }
