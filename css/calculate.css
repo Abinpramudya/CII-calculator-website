@@ -1,38 +1,93 @@
 body {
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-form {
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #0073e6;
+}
+
+.form-container {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+}
+
+.form-column {
+    flex: 1;
+    margin: 0 10px;
+    background-color: #e6f7ff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.two-column-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
-    margin: 20px auto;
-    width: 300px;
+}
+
+h2 {
+    text-align: center;
+    color: #005bb5;
+    grid-column: span 2;
+}
+
+.input-group {
+    margin-bottom: 15px;
 }
 
 label {
     display: block;
+    margin-bottom: 5px;
+    color: #005bb5;
 }
 
-input[type="number"] {
-    padding: 5px;
+input, select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #0073e6;
+    border-radius: 4px;
+    background-color: #f0f8ff;
+    color: #005bb5;
 }
 
-.container {
-    display: flex;
-    flex-direction: row;
+input:focus, select:focus {
+    border-color: #005bb5;
+    outline: none;
 }
 
-#calculateButton {
-    background-color: #ccc;
-    color: #333;
-    border: none;
+button {
+    display: block;
+    width: 100%;
     padding: 10px;
-    cursor: default;
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
-#calculateButton:enabled {
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
+button:hover {
+    background-color: #005bb5;
 }
