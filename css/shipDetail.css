@@ -73,13 +73,22 @@ button:hover {
     background-color: #005bb5;
 }
 
+.icon-btn#result-btn {
+    right: 100px; /* Adjust position so it's next to edit button */
+    background-color: #0073e6;
+}
+
+.icon-btn#result-btn:hover {
+    background-color: #005bb5;
+}
+
 .icon-btn#edit-btn {
     right: 60px; /* Adjust position so it's next to delete button */
-    background-color: #09c761;
+    background-color: #28a745;
 }
 
 .icon-btn#edit-btn:hover {
-    background-color: #089b4d;
+    background-color: #218838;
 }
 
 .icon-btn#delete-btn {

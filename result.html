@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculation Results</title>
   <link rel="stylesheet" href="css/result.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <div class="container">
+    <button id="back-btn" class="icon-btn"><i class="fas fa-arrow-left"></i></button>
     <h1>Calculation Results</h1>
 
     <h2>Fuel Consumption</h2>
@@ -45,6 +47,11 @@
       </tbody>
     </table>
   </div>
+  <script>
+    document.getElementById('back-btn').addEventListener('click', function() {
+        window.location.href = 'shipList.html'; // Navigate to shipList.html
+    });
+  </script>
   <script src="scripts/result.js"></script>
 </body>
 </html>

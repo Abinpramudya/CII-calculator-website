@@ -1,60 +1,109 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-  }
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff;
+  color: #333;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
   
-  .container {
-    width: 90%;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333;
-  }
-  
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}
+
+td:first-child {
+  background-color: #e0f7fa;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #0073e6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #005bb5;
+}
+
+.icon-btn {
+  position: absolute;
+  top: 20px;
+  background-color: #0073e6;
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.icon-btn#back-btn {
+  left: 20px;
+}
+
+.icon-btn#back-btn:hover {
+  background-color: #005bb5;
+}
+
+@media (max-width: 600px) {
   table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
   }
-  
+
   th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
+    padding: 5px;
   }
-  
-  th {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  td:first-child {
-    background-color: #e0f7fa;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  tr:hover {
-    background-color: #ddd;
-  }
-  
-  @media (max-width: 600px) {
-    table {
-      width: 100%;
-    }
-  
-    th, td {
-      padding: 5px;
-    }
-  }
+}
   

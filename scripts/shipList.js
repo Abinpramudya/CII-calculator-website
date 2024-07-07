@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,22 +18,19 @@ const colRef = collection(db, 'kapal')
 
 // Function to fetch and display ships
 function displayShips() {
-    const loadingElement = document.getElementById('loading');
-    loadingElement.style.display = 'block';
     getDocs(colRef)
         .then((snapshot) => {
             const shipList = document.getElementById('ship-list');
             shipList.innerHTML = ''; // Clear existing list items
-            loadingElement.style.display = 'none';
+
             snapshot.forEach((doc) => {
                 const shipData = doc.data();
-                const listItem = createShipListItem(doc.id, shipData); // Pass the document ID and data
+                const listItem = createShipListItem(doc.id, shipData);
                 shipList.appendChild(listItem);
             });
         })
         .catch((error) => {
             console.error("Error fetching documents: ", error);
-            loadingElement.textContent = 'Error loading data. Please try again.';
         });
 }
 
@@ -44,15 +41,13 @@ function createShipListItem(id, shipData) {
     listItem.dataset.id = id;
 
     const vesselTypeLabel = mapVesselType(shipData.VesselType);
-    const routeLabel = mapRoute(shipData.route);
-    const fuelTypeLabel = mapFuelType(shipData.foc_type);
 
     listItem.innerHTML = `
       <strong>${shipData.Name}</strong> - ${vesselTypeLabel}
       <br>
-      Route: ${routeLabel}
+      <i class="fas fa-route"></i> ${mapRoute(shipData.route)}
       <br>
-      Fuel Type: ${fuelTypeLabel}
+      <i class="fas fa-gas-pump"></i> ${mapFuelType(shipData.foc_type)}
     `;
 
     listItem.addEventListener('click', () => {
@@ -115,7 +110,7 @@ function mapRoute(route) {
             return route; // Return the numeric value if no match
     }
 }
-
+ 
 // Function to map fuel type to more descriptive labels
 function mapFuelType(fuelType) {
     switch (fuelType) {

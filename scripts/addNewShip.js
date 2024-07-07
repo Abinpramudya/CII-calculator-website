@@ -102,7 +102,7 @@ window.getForm = function(event) {
       console.error("Error writing document: ", error);
     });
 
-  window.open('results.html', '_blank');
+  window.open('shipList.html', '_blank');
 };
 
 // Attach the getForm function to the form submission event

@@ -89,6 +89,11 @@ function displayShipDetails(shipData, shipId) {
     editButton.addEventListener('click', () => {
         window.location.href = `editShip.html?id=${shipId}`; // Navigate to editShip.html
     });
+
+    const resultButton = document.getElementById('result-btn');
+    resultButton.addEventListener('click', () => {
+        window.location.href = 'result.html'
+    });
 }
 
 // Function to map vessel type to more descriptive labels
