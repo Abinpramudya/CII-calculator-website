@@ -1,3 +1,4 @@
+/* calculate.css */
 
 body {
     font-family: Arial, sans-serif;
@@ -18,11 +19,61 @@ body {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 h1 {
     text-align: center;
     color: #0073e6;
+    margin: 0;
+    padding-bottom: 20px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #005bb5;
+}
+
+.icon-btn {
+    position: absolute;
+    top: 20px;
+    background-color: #0073e6;
+    border: none;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.icon-btn#back-btn {
+    left: 20px;
+}
+
+.icon-btn#back-btn:hover {
+    background-color: #005bb5;
+}
+
+.icon-btn i {
+    margin: 0;
 }
 
 .form-container {
