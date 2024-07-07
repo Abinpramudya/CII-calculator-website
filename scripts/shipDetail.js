@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-import { getFirestore, doc, getDoc,deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+import { getFirestore, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -40,39 +40,48 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 
 function displayShipDetails(shipData, shipId) {
-    const shipDetails = document.getElementById('ship-details');
+    const shipDetailsElement = document.getElementById('ship-details');
+    const shipNameElement = document.getElementById('ship-name');
+    shipNameElement.textContent = shipData.Name;
 
-    const vesselTypeLabel = mapVesselType(shipData.VesselType);
-    const routeLabel = mapRoute(shipData.route);
-    const fuelTypeLabel = mapFuelType(shipData.foc_type);
+    // Set the main details
+    document.getElementById('vessel-type').textContent = `Vessel Type: ${mapVesselType(shipData.VesselType)}`;
+    document.getElementById('route').textContent = `Route: ${mapRoute(shipData.route)}`;
+    document.getElementById('fuel-type').textContent = `Fuel Type: ${mapFuelType(shipData.foc_type)}`;
 
-    shipDetails.innerHTML = `
-        <h2>${shipData.Name}</h2>
-        <p><strong>Vessel Type:</strong> ${vesselTypeLabel}</p>
-        <p><strong>Route:</strong> ${routeLabel}</p>
-        <p><strong>Fuel Type:</strong> ${fuelTypeLabel}</p>
-        <p><strong>LOA:</strong> ${shipData.LOA}</p>
-        <p><strong>LPP:</strong> ${shipData.LPP}</p>
-        <p><strong>LWL:</strong> ${shipData.LWL}</p>
-        <p><strong>LoS:</strong> ${shipData.LoS}</p>
-        <p><strong>B:</strong> ${shipData.B}</p>
-        <p><strong>T:</strong> ${shipData.T}</p>
-        <p><strong>H:</strong> ${shipData.H}</p>
-        <p><strong>DWT:</strong> ${shipData.DWT}</p>
-        <p><strong>VS:</strong> ${shipData.VS}</p>
-        <p><strong>Dprop:</strong> ${shipData.Dprop}</p>
-        <p><strong>Nrudder:</strong> ${shipData.Nrudder}</p>
-        <p><strong>Nthruster:</strong> ${shipData.Nthruster}</p>
-        <p><strong>TA:</strong> ${shipData.TA}</p>
-        <p><strong>TF:</strong> ${shipData.TF}</p>
-        <p><strong>Pme:</strong> ${shipData.pme}</p>
-        <p><strong>SFOC:</strong> ${shipData.sfoc}</p>
-        <p><strong>RPM:</strong> ${shipData.rpm}</p>
-        <p><strong>Aux Number:</strong> ${shipData.auxnumber}</p>
-        <p><strong>Aux Power:</strong> ${shipData.auxpower}</p>
-        <p><strong>Aux Fuel Consumption:</strong> ${shipData.auxfoc}</p>
-        <p><strong>Initial Speed:</strong> ${shipData.initialSpeed}</p>
-    `;
+    const details = [
+        { title: 'Length Overall (LOA)', value: `${shipData.LOA} meters` },
+        { title: 'Length Between Perpendiculars (LPP)', value: `${shipData.LPP} meters` },
+        { title: 'Length on Waterline (LWL)', value: `${shipData.LWL} meters` },
+        { title: 'Length on Surface (LoS)', value: `${shipData.LoS} meters` },
+        { title: 'Breath (B)', value: `${shipData.B} meters` },
+        { title: 'Draft (T)', value: `${shipData.T} meters` },
+        { title: 'Height (H)', value: `${shipData.H} meters` },
+        { title: 'Deadweight Tonnage (DWT)', value: `${shipData.DWT} tons` },
+        { title: 'Speed (VS)', value: `${shipData.initialSpeed} knots` },
+        { title: 'Propeller Diameter (Dprop)', value: `${shipData.Dprop} meters` },
+        { title: 'Number of Rudders', value: `${shipData.Nrudder}` },
+        { title: 'Number of Thrusters', value: `${shipData.Nthruster}` },
+        { title: 'Aft Draft (TA)', value: `${shipData.TA} meters` },
+        { title: 'Forward Draft (TF)', value: `${shipData.TF} meters` },
+        { title: 'Main Engine Power (Pme)', value: `${shipData.pme} kW` },
+        { title: 'Specific Fuel Oil Consumption (SFOC)', value: `${shipData.sfoc} g/kWh` },
+        { title: 'Revolutions Per Minute (RPM)', value: `${shipData.rpm} RPM` },
+        { title: 'Number of Auxiliary Engines', value: `${shipData.auxnumber}` },
+        { title: 'Auxiliary Engine Power', value: `${shipData.auxpower} kW` },
+        { title: 'Auxiliary Fuel Consumption', value: `${shipData.auxfoc} g/kWh` },
+    ];
+    
+
+    details.forEach(detail => {
+        const detailTile = document.createElement('div');
+        detailTile.classList.add('detail-tile');
+        detailTile.innerHTML = `
+            <div class="detail-title">${detail.title}</div>
+            <div class="detail-value">${detail.value}</div>
+        `;
+        shipDetailsElement.appendChild(detailTile);
+    });
 
     const deleteButton = document.getElementById('delete-btn');
     deleteButton.addEventListener('click', async () => {

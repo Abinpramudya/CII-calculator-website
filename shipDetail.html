@@ -9,12 +9,20 @@
 </head>
 <body>
   <div class="container">
-    <h1>Ship Details</h1>
-    <div id="loading" class="loading"></div>
     <button id="back-btn" class="icon-btn"><i class="fas fa-arrow-left"></i></button>
     <button id="edit-btn" class="icon-btn"><i class="fas fa-edit"></i></button>
     <button id="delete-btn" class="icon-btn"><i class="fas fa-trash"></i></button>
     <button id="result-btn" class="icon-btn"><i class="fa-solid fa-calculator"></i></button>
+    <div class="title-container">
+      <h1>Ship Details</h1>
+      <h2 id="ship-name"></h2>
+    </div>
+    <div id="loading" class="loading"></div>
+    <div id="main-details" class="main-details">
+      <div id="vessel-type" class="main-detail"></div>
+      <div id="route" class="main-detail"></div>
+      <div id="fuel-type" class="main-detail"></div>
+    </div>
     <div id="ship-details" class="ship-details">
       <!-- Ship details will be dynamically added here -->
     </div>
