@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Ship Form</title>
+  <link rel="stylesheet" href="css/editShip.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <button id="back-btn" class="icon-btn"><i class="fas fa-arrow-left"></i></button>
+    <h1>Edit Ship Form</h1>
+    <div class="form-container">
+      <form id="ship-data-form" class="form-column two-column-form">
+        <h2>Ship Data</h2>
+        <div class="input-group">
+          <label for="Vessel-Name">Vessel Name</label>
+          <input id="Vessel-Name" name="Vessel-Name" required>
+        </div>
+        <div class="input-group">
+          <label for="vessel-type">Vessel Type</label>
+          <select id="vessel-type" name="vessel-type">
+            <option value="General-Cargo">General Cargo</option>
+            <option value="Bulk-Carrier">Bulk Carrier</option>
+            <option value="Gas-Carrier">Gas Carrier</option>
+            <option value="Tanker">Tanker</option>
+            <option value="Container-Vessel">Container Vessel</option>
+            <option value="Refrigerated-Cargo-Carrier">Refrigerated Cargo Carrier</option>
+            <option value="Combination-Carrier">Combination Carrier</option>
+            <option value="LNG-Carrier">LNG Carrier</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="LOA">LOA</label>
+          <input type="number" id="LOA" name="LOA" required>
+        </div>
+        <div class="input-group">
+          <label for="LPP">LPP</label>
+          <input type="number" id="LPP" name="LPP" required>
+        </div>
+        <div class="input-group">
+          <label for="LoS">LoS</label>
+          <input type="number" id="LoS" name="LoS" required>
+        </div>
+        <div class="input-group">
+          <label for="B">B</label>
+          <input type="number" id="B" name="B" required>
+        </div>
+        <div class="input-group">
+          <label for="T">T</label>
+          <input type="number" id="T" name="T" required>
+        </div>
+        <div class="input-group">
+          <label for="H">H</label>
+          <input type="number" id="H" name="H" required>
+        </div>
+        <div class="input-group">
+          <label for="DWT">DWT</label>
+          <input type="number" id="DWT" name="DWT" required>
+        </div>
+        <div class="input-group">
+          <label for="Vs">Vs</label>
+          <input type="number" id="Vs" name="Vs" required>
+        </div>
+        <div class="input-group">
+          <label for="Dprop">D Prop</label>
+          <input type="number" id="Dprop" name="Dprop" required>
+        </div>
+        <div class="input-group">
+          <label for="Nrudder">N Rudder</label>
+          <input type="number" id="Nrudder" name="Nrudder" min="1" max="2" required>
+        </div>
+        <div class="input-group">
+          <label for="Nthruster">N Thruster</label>
+          <input type="number" id="Nthruster" name="Nthruster" required>
+        </div>
+        <div class="input-group">
+          <label for="TA">TA</label>
+          <input type="number" id="TA" name="TA" required>
+        </div>
+        <div class="input-group">
+          <label for="TF">TF</label>
+          <input type="number" id="TF" name="TF" required>
+        </div>
+      </form>
+
+      <form id="machinery-data-form" class="form-column">
+        <h2>Machinery Data</h2>
+        <div class="input-group">
+          <label for="Pme">Pme</label>
+          <input type="number" id="Pme" name="Pme" required>
+        </div>
+        <div class="input-group">
+          <label for="SFOC">SFOC</label>
+          <input type="number" id="SFOC" name="SFOC" required>
+        </div>
+        <div class="input-group">
+          <label for="RPM">Nprop</label>
+          <input type="number" id="RPM" name="RPM" required>
+        </div>
+        <div class="input-group">
+          <label for="fuel-type">Fuel Type</label>
+          <select id="fuel-type" name="fuel-type">
+            <option value="HFO">HFO</option>
+            <option value="MDO">MDO</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="aux-power">Aux Power</label>
+          <input type="number" id="aux-power" name="aux-power" required>
+        </div>
+        <div class="input-group">
+          <label for="aux-number">Aux Number</label>
+          <input type="number" id="aux-number" name="aux-number" required>
+        </div>
+        <div class="input-group">
+          <label for="aux-foc">Aux FOC</label>
+          <input type="number" id="aux-foc" name="aux-foc" required>
+        </div>
+        <button type="submit" id="submit-form">Update</button>
+      </form>
+
+      <form id="route-selection-form" class="form-column">
+        <h2>Route</h2>
+        <div class="input-group">
+          <label for="route">Route</label>
+          <select id="route" name="route" type="number">
+            <option value=1>SUB-WIN-SUB</option>
+            <option value=2>SUB-PTL-SUB</option>
+            <option value=3>SUB-JKT-SUB</option>
+            <option value=4>SUB-MKS-SUB</option>
+            <option value=5>SUB-BPN-SUB</option>
+            <option value=6>JKT-PDG-JKT</option>
+            <option value=7>SUB-BDJ-SUB</option>
+            <option value=8>SUB-TRK-SUB</option>
+            <option value=9>SUB-TLI-PTL-SUB</option>
+            <option value=10>SUB-DIL-SUB</option>
+            <option value=11>SUB-TLI-SUB</option>
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.getElementById('back-btn').addEventListener('click', function() {
+        window.location.href = 'shipList.html'; // Navigate to shipList.html
+    });
+  </script>
+  <script src="scripts/editShip.js" type="module"></script>
+</body>
+</html>

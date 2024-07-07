@@ -73,6 +73,15 @@ button:hover {
     background-color: #005bb5;
 }
 
+.icon-btn#edit-btn {
+    right: 60px; /* Adjust position so it's next to delete button */
+    background-color: #09c761;
+}
+
+.icon-btn#edit-btn:hover {
+    background-color: #089b4d;
+}
+
 .icon-btn#delete-btn {
     right: 20px;
 }

@@ -84,6 +84,11 @@ function displayShipDetails(shipData, shipId) {
             }
         }
     });
+
+    const editButton = document.getElementById('edit-btn');
+    editButton.addEventListener('click', () => {
+        window.location.href = `editShip.html?id=${shipId}`; // Navigate to editShip.html
+    });
 }
 
 // Function to map vessel type to more descriptive labels
