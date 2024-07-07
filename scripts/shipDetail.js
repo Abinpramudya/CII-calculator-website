@@ -59,6 +59,7 @@ function displayShipDetails(shipData, shipId) {
         <p><strong>T:</strong> ${shipData.T}</p>
         <p><strong>H:</strong> ${shipData.H}</p>
         <p><strong>DWT:</strong> ${shipData.DWT}</p>
+        <p><strong>VS:</strong> ${shipData.VS}</p>
         <p><strong>Dprop:</strong> ${shipData.Dprop}</p>
         <p><strong>Nrudder:</strong> ${shipData.Nrudder}</p>
         <p><strong>Nthruster:</strong> ${shipData.Nthruster}</p>
@@ -67,6 +68,8 @@ function displayShipDetails(shipData, shipId) {
         <p><strong>Pme:</strong> ${shipData.pme}</p>
         <p><strong>SFOC:</strong> ${shipData.sfoc}</p>
         <p><strong>RPM:</strong> ${shipData.rpm}</p>
+        <p><strong>Aux Number:</strong> ${shipData.auxnumber}</p>
+        <p><strong>Aux Power:</strong> ${shipData.auxpower}</p>
         <p><strong>Aux Fuel Consumption:</strong> ${shipData.auxfoc}</p>
         <p><strong>Initial Speed:</strong> ${shipData.initialSpeed}</p>
     `;
@@ -92,7 +95,7 @@ function displayShipDetails(shipData, shipId) {
 
     const resultButton = document.getElementById('result-btn');
     resultButton.addEventListener('click', () => {
-        window.location.href = 'result.html'
+        window.location.href = `result.html?id=${shipId}`; // Navigate to result.html
     });
 }
 

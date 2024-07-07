@@ -47,6 +47,7 @@ window.getForm = function(event) {
   const T = parseFloat(shipData.querySelector('input[name="T"]').value);
   const H = parseFloat(shipData.querySelector('input[name="H"]').value);
   const DWT = parseFloat(shipData.querySelector('input[name="DWT"]').value);
+  const VS = parseFloat(shipData.querySelector('input[name="Vs"]').value);
   const Dprop = parseFloat(shipData.querySelector('input[name="Dprop"]').value);
   const Nrudder = parseFloat(shipData.querySelector('input[name="Nrudder"]').value);
   const Nthruster = parseFloat(shipData.querySelector('input[name="Nthruster"]').value);
@@ -57,6 +58,9 @@ window.getForm = function(event) {
   const pme = parseFloat(machineryData.querySelector('input[name="Pme"]').value);
   const sfoc = parseFloat(machineryData.querySelector('input[name="SFOC"]').value);
   const rpm = parseFloat(machineryData.querySelector('input[name="RPM"]').value);
+
+  const auxpower = parseFloat(machineryData.querySelector('input[name="aux-power"]').value);
+  const auxnumber = parseFloat(machineryData.querySelector('input[name="aux-number"]').value);
   const auxfoc = parseFloat(machineryData.querySelector('input[name="aux-foc"]').value);
 
   const route = parseInt(routeData.querySelector('select[name="route"]').value);
@@ -72,6 +76,7 @@ window.getForm = function(event) {
     T,
     H,
     DWT,
+    VS,
     Dprop,
     Nrudder,
     Nthruster,
@@ -81,6 +86,8 @@ window.getForm = function(event) {
     pme,
     sfoc,
     rpm,
+    auxpower,
+    auxnumber,
     auxfoc,
     route,
     initialSpeed
@@ -89,8 +96,7 @@ window.getForm = function(event) {
   localStorage.setItem('initial_speed', initialSpeed);
 
   const dataToSave = {
-    ...shipDataObj,
-    speed: Vs
+    ...shipDataObj
   }
 
   // Add data to Firebase Firestore
@@ -102,7 +108,7 @@ window.getForm = function(event) {
       console.error("Error writing document: ", error);
     });
 
-  window.open('shipList.html', '_blank');
+  window.open('shipList.html');
 };
 
 // Attach the getForm function to the form submission event

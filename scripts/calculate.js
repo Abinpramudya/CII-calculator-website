@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc} from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,17 +14,81 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const colRef = collection(db,'kapal')
+const colRef = collection(db, 'kapal');
 
-// Fetch documents 
-getDocs(colRef)
-  .then((snapshot) => {
-    console.log("Fetched documents:", snapshot.docs.map(doc => doc.data()));
-  })
-  .catch((error) => {
-    console.error("Error fetching documents: ", error);
-  });
+document.addEventListener('DOMContentLoaded', async function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const shipId = urlParams.get('id');
+  if (shipId) {
+      const shipDoc = doc(db, 'kapal', shipId);
+      try {
+          const shipSnap = await getDoc(shipDoc);
+          if (shipSnap.exists()) {
+              const shipData = shipSnap.data();
+              const Name = shipData.Name;
+              const VesselType = shipData.VesselType;
+              const LOA = shipData.LOA;
+              const LPP = shipData.LPP;
+              const LWL = LPP * 1.035;
+              const LoS = shipData.LoS;
+              const B = shipData.B;
+              const T = shipData.T;
+              const H = shipData.H;
+              const DWT = shipData.DWT;
+              const Vs = shipData.VS;
+              const Dprop = shipData.Dprop;
+              const Nrudder = shipData.Nrudder;
+              const Nthruster = shipData.Nthruster;
+              const TA = shipData.TA;
+              const TF = shipData.TF;
+              const foc_type = shipData.foc_type;
+              const pme = shipData.pme;
+              const sfoc = shipData.sfoc;
+              const rpm = shipData.rpm;
+              const auxpower = shipData.auxpower;
+              const auxnumber = shipData.auxnumber;
+              const auxfoc = shipData.auxfoc;
+              const route = shipData.route;
 
+              // Console logs for all variables
+              console.log('Name:', Name);
+              console.log('VesselType:', VesselType);
+              console.log('LOA:', LOA);
+              console.log('LPP:', LPP);
+              console.log('LWL:', LWL);
+              console.log('LoS:', LoS);
+              console.log('B:', B);
+              console.log('T:', T);
+              console.log('H:', H);
+              console.log('DWT:', DWT);
+              console.log('Vs:', Vs);
+              console.log('Dprop:', Dprop);
+              console.log('Nrudder:', Nrudder);
+              console.log('Nthruster:', Nthruster);
+              console.log('TA:', TA);
+              console.log('TF:', TF);
+              console.log('foc_type:', foc_type);
+              console.log('pme:', pme);
+              console.log('sfoc:', sfoc);
+              console.log('rpm:', rpm);
+              console.log('auxpower:', auxpower);
+              console.log('auxnumber:', auxnumber);
+              console.log('auxfoc:', auxfoc);
+              console.log('route:', route);
+
+              calculateCII(Name, VesselType, LOA, LPP, LWL, LoS, B, T, H, DWT, Dprop, Nrudder, Nthruster, TA, TF, foc_type, pme, sfoc, rpm, auxfoc, route);
+              populateTables(Vs,Name)
+          } else {
+              console.log("No such document");
+          }
+      } catch (error) {
+          console.error("Error fetching document: ", error);
+          console.log("Error loading data. Please try again.");
+      }
+  } else {
+      console.log("No ship ID provided in URL.");
+  }
+});
 
 
 //dummy values
@@ -63,17 +127,19 @@ function reynoldnumber(Vs, LWL) {
   Vs = Vs * 0.5144;
 
   var rey = (Vs * LWL) / 0.00000093713; 
+  console.log("rey",rey)
   return rey;
 }
 
 function coefficientfriction(rey){
-  cf = 0.075 / (Math.log10(rey) - 2) ** 2;
+  var cf = 0.075 / (Math.log10(rey) - 2) ** 2;
+  console.log("cf:",cf)
   // var cf = 123;
   return cf
 }
 
 function froudenumber(Vs,LWL){
-  Vs = Vs * 0.5144;
+  var Vs = Vs * 0.5144;
   const g = 9.81; // m/s^2
   return Vs / Math.sqrt(g * LWL);
 }
@@ -83,8 +149,8 @@ function coefficientblock_cal(froude_number){
 }
 
 function shapecoef_cal(LoS,LWL,LPP,cb,B,T,TA,TF,Dprop,Nrudder){
-  Nbracket = Nrudder
-  Nbossing = Nrudder
+  var Nbracket = Nrudder
+  var Nbossing = Nrudder
 
   if (Nrudder === 1){
     var s0 = -0.6837
@@ -116,7 +182,7 @@ function shapecoef_cal(LoS,LWL,LPP,cb,B,T,TA,TF,Dprop,Nrudder){
     var Kbossing = 0.0061
   }
 
-  k = s0 + (s1 * (LoS / LWL)) + (s2 * (LWL / LPP)) + (s3 * cb) + (s4 * (LPP / B)) +
+  var k = s0 + (s1 * (LoS / LWL)) + (s2 * (LWL / LPP)) + (s3 * cb) + (s4 * (LPP / B)) +
       (s5 * (B / T)) + (s6 * (LPP/T)) + (s7 * ((TA - TF) / LPP)) + (s8 *(Dprop / T)) +
       (Krudder * Nrudder) + (Kbracket * Nbracket) + (Kbossing * Nbossing)
 
@@ -128,7 +194,7 @@ function wetsurface_cal(LPP,B,T,shapecoef){
 }
 
 function resistancefriction_cal(cf,p,s,v){
-  v = v * 0.5144
+  var v = v * 0.5144
   return cf *(p/2) * s * (v ** 2) / 1000
 }
 
@@ -182,7 +248,7 @@ function kfr_cal(fcrit,fn){
     var a = 1
   }
   if(fn > fcrit){
-    c1 = fn / fcrit
+    var c1 = fn / fcrit
     var a = (fn/fcrit) ** c1
   }
   return a
@@ -211,7 +277,7 @@ function beamdraft_cal(B,T,Nrudder){
   if (Nrudder ===2){
     a1 = 0.2748
   }
-  ratio = B/T
+  var ratio = B/T
 
   if (ratio < 1.99){
     var  a  = 1.99 ** a1
@@ -232,7 +298,7 @@ function lengthbeam_cal(LPP,B,Nrudder){
   if (Nrudder ===2){
     a2 = -0.5747
   }
-  ratio = LPP/B
+  var ratio = LPP/B
 
   if (ratio <= 7.11){
     var  a  = (LPP/B) ** a2
@@ -255,7 +321,7 @@ function wettedratio_cal(LoS,LWL,Nrudder){
     a3 = -6.761
   }
 
-  ratio = LoS / LWL
+  var ratio = LoS / LWL
 
   if (ratio <= 1.05){
     var   a  = (LoS/LWL) ** a3
@@ -277,7 +343,7 @@ function aftoverhang_cal(LWL,LPP,Nrudder){
     a4 = -4.3834
   }
 
-  ratio = LWL / LPP
+  var ratio = LWL / LPP
 
   if (ratio <= 1.06){
     var   a  = ratio ** a4
@@ -312,7 +378,7 @@ function propellerfactor_cal(D,TA,Nrudder){
     a6 = -0.1418
   }
 
-  ratio = D/TA  
+  var ratio = D/TA  
 
   if (ratio < 0.43){
     var  a = 0.43 ** a6
@@ -346,9 +412,9 @@ function coefresidual_cal(Nthruster,Nrudder,crstd,kfr,lengthfactor,beamdraft,len
     var a9 = 0.1699
     var a10 = 0.0728
   }
-  Nthruster = 1
-  Nbracket = Nrudder
-  Nbossing = Nrudder
+  var Nthruster = 1
+  var Nbracket = Nrudder
+  var Nbossing = Nrudder
 
   
   return crstd * kfr * lengthfactor * beamdraft * lengthbeam * wettedratio * aftoverhang * trimcorrection *
@@ -356,7 +422,7 @@ function coefresidual_cal(Nthruster,Nrudder,crstd,kfr,lengthfactor,beamdraft,len
 }
 
 function resistanceresidual_cal(coefficientresidual,p,vs,B,T){
-  vs = vs * 0.5144
+  var vs = vs * 0.5144
   
   return coefficientresidual * ((p/2)*(vs**2)) *((B*T)/10) / 1000
 
@@ -367,7 +433,7 @@ function resistancetotal_cal(resistancefriction,resistanceresidual){
 }
 
 function Ppropel_cal(resistancetotal,Vs){
-  Vs = Vs * 0.5144
+  var Vs = Vs * 0.5144
 
   return resistancetotal * Vs
 }
@@ -398,17 +464,17 @@ function SFOC_cal(sfocrel,sfoc){
 }
 
 function FOC_cal(pme){
-  ratio = 0.85
+  var ratio = 0.85
   return pme * ratio
 }
 
 function EL_port_cal(vesseltype){
   if (vesseltype === "General Cargo"){
-    el_port = 1.6
+    var el_port = 1.6
   }
 
   else{
-    el_port = 0.7
+    var el_port = 0.7
   }
 
   return el_port
@@ -553,26 +619,26 @@ function ae_sail_cal(auxfoc,el_sail,sailing,manuver1,manuver2,manuver3){
 }
 
 function ae_port_cal(auxfoc,el_port,time1,time2,time3){
-  total = time1 + time2 + time3
+  var total = time1 + time2 + time3
 
   return auxfoc * el_port * total
 }
 
 function totalsail_cal(time1,time2,time3,manuver1,manuver2,manuver3,saildistance,Vs){
-  sailtime = saildistance / Vs
+  var sailtime = saildistance / Vs
 
-  total = time1 + time2 + time3 + manuver1 + manuver2 + manuver3 + sailtime
+  var total = time1 + time2 + time3 + manuver1 + manuver2 + manuver3 + sailtime
   return total
 }
 
 function foc_total_cal(foctype,aesail,aeport,mesail,memnv){
 
   if (foctype === "MDO"){
-    total = aesail + aeport + mesail + memnv
+    var total = aesail + aeport + mesail + memnv
   }
 
   else {
-    total = mesail + memnv
+    var total = mesail + memnv
   }
 
   return total
@@ -705,6 +771,38 @@ function cii_grade_cal(currentCii, inferiorCii, upperCii, lowerCii, superiorCii)
   }
 }
 
+function calculateCII(Name, VesselType, LOA, LPP, LWL, LoS, B, T, H, DWT, Dprop, Nrudder, Nthruster, TA, TF, foc_type, pme, sfoc, rpm, auxfoc, route) {
+  let initialSpeed = 13.8;
+  const startYear = 2024; // Starting year
+  const endYear = 2030; // Ending year
+
+  localStorage.clear();
+
+  for (let year = startYear; year <= endYear; year++) {
+    let Vs = initialSpeed;
+    for (let i = 0; i < 8; i++) {
+      const result = FinaHFO_cal(Name, VesselType, DWT, LOA, LPP, LWL, LoS, B, T, H, Vs, Dprop, Nrudder, Nthruster, TA, TF, pme, sfoc, rpm, auxfoc, route, foc_type, year);
+
+      // Store each iteration's results in local storage with a unique key
+      const prefix = `result_${year}_${i}_`;
+      for (const [key, value] of Object.entries(result)) {
+        localStorage.setItem(`${prefix}${key}`, value);
+      }
+
+      // Log the results
+      console.log(`Year ${year} - Speed iteration ${i + 1}`);
+      for (const [key, value] of Object.entries(result)) {
+        console.log(`${key}:`, value);
+      }
+
+      // Reduce Vs by 1 for the next iteration
+      Vs -= 1;
+    }
+  }
+
+  window.open('results.html', '_blank');
+}
+
 function FinaHFO_cal(name, vesselType, DWT, LOA, LPP, LWL, LoS, B, T, H, Vs, Dprop, Nrudder, Nthruster, TA, TF, pme, sfoc, rpm,auxfoc,route, foc_type, year) {
   const reynold_number = reynoldnumber(Vs, LWL);
   const cf_number = coefficientfriction(reynold_number);
@@ -746,11 +844,7 @@ function FinaHFO_cal(name, vesselType, DWT, LOA, LPP, LWL, LoS, B, T, H, Vs, Dpr
   const { docking, days, avail, distance, sailingTime, Time1, Time2, Time3, manuver1, manuver2, manuver3, totalsail, maxvoyage } = routes;
   const sailtime = totalsail_cal(Time1, Time2, Time3, manuver1, manuver2, manuver3, distance, Vs);
 
-
-
-  const SailTime_AE = distance / Vs
-
-
+  const SailTime_AE = distance / Vs;
 
   const aesail = ae_sail_cal(auxfoc, elsail, SailTime_AE, manuver1, manuver2, manuver3);
   const aeport = ae_port_cal(auxfoc, elport, Time1, Time2, Time3);
@@ -770,7 +864,6 @@ function FinaHFO_cal(name, vesselType, DWT, LOA, LPP, LWL, LoS, B, T, H, Vs, Dpr
     var foctotal = foc_total_cal(foc_type, aesail, aeport, me_sail_hfo, me_mnv_hfo);
     var foc_me = me_sail_hfo + me_mnv_hfo;
   }
-
 
   const focae = aesail + aeport;
   const margin_up_ae = focae * 1.03;
@@ -799,11 +892,9 @@ function FinaHFO_cal(name, vesselType, DWT, LOA, LPP, LWL, LoS, B, T, H, Vs, Dpr
   const refcal = dd_ref_cal(vesselType,DWT);
   const {d1,d2,d3,d4} = refcal;
 
-
   const cii_req = cii_req_cal(year, d1, d2, d3, d4, cii_ref);
 
   const {inferior_cii,upper_cii,lower_cii,superior_cii} = cii_req;
-
 
   const cii_grade = cii_grade_cal(attained_cii, inferior_cii, upper_cii, lower_cii, superior_cii);
 
@@ -872,84 +963,52 @@ function FinaHFO_cal(name, vesselType, DWT, LOA, LPP, LWL, LoS, B, T, H, Vs, Dpr
   return result;
 }
 
-window.getForm = function(event) {
-  event.preventDefault();
-  let initialSpeed = 13.8;
-  const startYear = 2024; // Starting year
-  const endYear = 2030; // Ending year
+// Function to populate the tables based on localStorage data
+function populateTables(Vs,Name) {
+  const fuelConsumptionTable = document.getElementById('fuel-consumption-table').querySelector('tbody');
+  const ciiGradeTable = document.getElementById('cii-grade-table').querySelector('tbody');
 
-  localStorage.clear();
+  const startYear = 2024;
+  const endYear = 2030;
+  const initialSpeed = Vs;
 
-  const shipData = document.getElementById("ship-data-form");
-  const machineryData = document.getElementById("machinery-data-form");
-  const routeData = document.getElementById("route-selection-form");
+  // Display the ship name
+  const shipNameElement = document.getElementById('ship-name');
+  shipNameElement.textContent = Name;
 
-  const Name = shipData.querySelector('input[name="Vessel-Name"]').value;
-  const VesselType = shipData.querySelector('select[name="vessel-type"]').value;
-  const LOA = parseFloat(shipData.querySelector('input[name="LOA"]').value);
-  const LPP = parseFloat(shipData.querySelector('input[name="LPP"]').value);
-  const LWL = LPP * 1.035;
-  const LoS = parseFloat(shipData.querySelector('input[name="LoS"]').value);
-  const B = parseFloat(shipData.querySelector('input[name="B"]').value);
-  const T = parseFloat(shipData.querySelector('input[name="T"]').value);
-  const H = parseFloat(shipData.querySelector('input[name="H"]').value);
-  const DWT = parseFloat(shipData.querySelector('input[name="DWT"]').value);
-  const Dprop = parseFloat(shipData.querySelector('input[name="Dprop"]').value);
-  const Nrudder = parseFloat(shipData.querySelector('input[name="Nrudder"]').value);
-  const Nthruster = parseFloat(shipData.querySelector('input[name="Nthruster"]').value);
-  const TA = parseFloat(shipData.querySelector('input[name="TA"]').value);
-  const TF = parseFloat(shipData.querySelector('input[name="TF"]').value);
+  for (let i = 0; i < 8; i++) {
+    const speed = (initialSpeed - i).toFixed(1);
+    // console.log("speed",speed)
 
-  const foc_type = machineryData.querySelector('select[name="fuel-type"]').value;
-  const pme = parseFloat(machineryData.querySelector('input[name="Pme"]').value);
-  const sfoc = parseFloat(machineryData.querySelector('input[name="SFOC"]').value);
-  const rpm = parseFloat(machineryData.querySelector('input[name="RPM"]').value);
-  const auxfoc = parseFloat(machineryData.querySelector('input[name="aux-foc"]').value);
+    // Populate Fuel Consumption Table
+    const fuelRow = document.createElement('tr');
+    const lowerMarginMe = parseFloat(localStorage.getItem(`result_${startYear}_${i}_margin_dn_me`)).toFixed(3);
+    const upperMarginMe = parseFloat(localStorage.getItem(`result_${startYear}_${i}_margin_up_me`)).toFixed(3);
+    const lowerMarginAe = parseFloat(localStorage.getItem(`result_${startYear}_${i}_margin_dn_ae`)).toFixed(3);
+    const upperMarginAe = parseFloat(localStorage.getItem(`result_${startYear}_${i}_margin_up_ae`)).toFixed(3);
 
-  const route = parseInt(routeData.querySelector('select[name="route"]').value);
+    fuelRow.innerHTML = `
+      <td>${speed}</td>
+      <td>${lowerMarginMe}</td>
+      <td>${upperMarginMe}</td>
+      <td>${lowerMarginAe}</td>
+      <td>${upperMarginAe}</td>
+    `;
+    fuelConsumptionTable.appendChild(fuelRow);
 
-  localStorage.setItem('initial_speed', initialSpeed);
-
-  for (let year = startYear; year <= endYear; year++) {
-    let Vs = initialSpeed;
-    for (let i = 0; i < 8; i++) {
-      const result = FinaHFO_cal(Name, VesselType, DWT, LOA, LPP, LWL, LoS, B, T, H, Vs, Dprop, Nrudder, Nthruster, TA, TF, pme, sfoc, rpm, auxfoc, route, foc_type, year);
-
-      // Store each iteration's results in local storage with a unique key
-      const prefix = `result_${year}_${i}_`;
-      for (const [key, value] of Object.entries(result)) {
-        localStorage.setItem(`${prefix}${key}`, value);
-      }
-
-      // Log the results
-      console.log(`Year ${year} - Speed iteration ${i + 1}`);
-      for (const [key, value] of Object.entries(result)) {
-        console.log(`${key}:`, value);
-      }
-
-      // Add result to Firebase Firestore
-      addDoc(colRef, {
-        year: year,
-        iteration: i + 1,
-        ...result
-      }).then(() => {
-        console.log("Document successfully written!");
-      }).catch((error) => {
-        console.error("Error writing document: ", error);
-      });
-
-      // Reduce Vs by 1 for the next iteration
-      Vs -= 1;
+    // Populate CII Grade Table
+    const ciiRow = document.createElement('tr');
+    ciiRow.innerHTML = `<td>${speed}</td>`;
+    
+    for (let year = startYear; year <= endYear; year++) {
+      const ciiGrade = localStorage.getItem(`result_${year}_${i}_cii_grade`);
+      const ciiCell = document.createElement('td');
+      ciiCell.textContent = ciiGrade;
+      ciiRow.appendChild(ciiCell);
     }
+    
+    ciiGradeTable.appendChild(ciiRow);
   }
-
-  window.open('results.html', '_blank');
 }
 
-// Attach the getForm function to the form submission event
-document.getElementById("submit-form").addEventListener("click", getForm);
 
-  // Store result in local storage
-  // localStorage.setItem('reynold_number', reynold_number);
-  // localStorage.setItem('cf_number',cf_number)
-  // localStorage.setItem('froude_number',froude_number)

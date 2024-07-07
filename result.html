@@ -10,8 +10,10 @@
 <body>
   <div class="container">
     <button id="back-btn" class="icon-btn"><i class="fas fa-arrow-left"></i></button>
-    <h1>Calculation Results</h1>
-
+    <div class="title-container">
+      <h1>Calculation Results</h1>
+      <h2 id="ship-name"></h2>
+    </div>
     <h2>Fuel Consumption</h2>
     <table id="fuel-consumption-table">
       <thead>
@@ -52,6 +54,6 @@
         window.location.href = 'shipList.html'; // Navigate to shipList.html
     });
   </script>
-  <script src="scripts/result.js"></script>
+  <script src="scripts/calculate.js" type="module"></script>
 </body>
 </html>
