@@ -14,30 +14,30 @@ body {
     flex-direction: column;
 }
 
-/* Header styling (unchanged) */
+/* Header styling */
 header {
-    background-color: #2196f3; /* Matches the blue navbar color from the image */
+    background-color: #2196f3;
     padding: 20px 0;
-    display: flex; /* Added flexbox for layout */
-    justify-content: space-between; /* Distribute items horizontally */
-    align-items: center; /* Vertically align header elements */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header .container {
     max-width: 90%;
     margin: 0 auto;
     display: flex;
-    flex-direction: row; /* Maintains row layout for logo and button */
-    justify-content: space-between; /* Distributes logo and button horizontally */
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .logo {
-    width: 150px; /* Increased logo width based on the image */
+    width: 150px;
     height: auto;
-    align-self: center; /* Add space between logo and button */
+    align-self: center;
 }
 
-/* Navigation styling (unchanged) */
+/* Navigation styling */
 nav {
     display: flex;
     align-items: center;
@@ -56,7 +56,7 @@ nav li {
 }
 
 nav a {
-    color: #fff; /* White text color for navbar links */
+    color: #fff;
     text-decoration: none;
     font-weight: bold;
     padding: 10px 15px;
@@ -64,7 +64,7 @@ nav a {
 }
 
 nav a:hover {
-    background-color: #0069d9; /* A slightly darker blue for hover effect */
+    background-color: #0069d9;
 }
 
 /* Main content styles */
@@ -72,47 +72,47 @@ main {
     display: flex;
     flex-direction: column;
     padding: 20px 0;
-    align-items: center; /* Center main content horizontally */
+    align-items: center;
 }
 
-#signup {
+#signin {
     width: 50vh;
     background-color: #e6f7ff;
     border: 1px solid #b3e0ff;
     padding: 5vh;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column; /* Center form content vertically */
-    align-items: center; /* Center form content horizontally */
-    animation: floatUp 1s ease-out forwards; /* Apply the float up animation */
+    flex-direction: column;
+    align-items: center;
+    animation: floatUp 1s ease-out forwards;
 }
 
-#signup h1 {
+#signin h1 {
     color: #005c99;
     text-align: center;
     margin-bottom: 20px;
 }
 
-#signup-form {
+#signin-form {
     width: 100%;
     max-width: 500px;
 }
 
-#signup-form .form-group {
+#signin-form .form-group {
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center each form group horizontally */
+    align-items: center;
 }
 
-#signup-form .form-group label {
+#signin-form .form-group label {
     margin-bottom: 5px;
     color: #005c99;
     width: 100%;
-    text-align: left; /* Align labels to the left */
+    text-align: left;
 }
 
-#signup-form .form-group input {
+#signin-form .form-group input {
     width: 100%;
     padding: 10px;
     border: 1px solid #b3e0ff;
@@ -121,13 +121,13 @@ main {
     box-sizing: border-box;
 }
 
-#signup-form .form-group input:focus {
+#signin-form .form-group input:focus {
     border-color: #66b2ff;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 92, 153, 0.5);
 }
 
-#signup-form button {
+#signin-form button {
     width: 100%;
     padding: 10px;
     border: none;
@@ -138,36 +138,35 @@ main {
     cursor: pointer;
 }
 
-#signup-form button:hover {
+#signin-form button:hover {
     background-color: #004080;
 }
 
-/* Animation keyframes */
-@keyframes floatUp {
-    0% {
-        transform: translateY(100px); /* Start from 100px below the final position */
-        opacity: 0; /* Start with 0 opacity */
-    }
-    100% {
-        transform: translateY(0); /* End at the final position */
-        opacity: 1; /* End with full opacity */
-    }
-}
-
-
-/* Add this CSS for the sign-in text link */
-.signin-text {
+/* Sign up text link */
+.signup-text {
     text-align: center;
     margin-top: 20px;
     color: #333;
 }
 
-.signin-text a {
+.signup-text a {
     color: #005c99;
     text-decoration: none;
     font-weight: bold;
 }
 
-.signin-text a:hover {
+.signup-text a:hover {
     text-decoration: underline;
+}
+
+/* Animation keyframes */
+@keyframes floatUp {
+    0% {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

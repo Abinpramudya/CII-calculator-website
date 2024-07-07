@@ -1,79 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stored Values</title>
-    <link rel="stylesheet" href="css/result.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculation Results</title>
+  <link rel="stylesheet" href="css/result.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Stored Values</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-                    <th>Value</th>
-                </tr>
-            </thead>
-            <tbody id="valuesTable">
-                <!-- Values will be inserted here by JavaScript -->
-            </tbody>
-        </table>
-    </div>
+  <div class="container">
+    <h1>Calculation Results</h1>
 
-    <script>
-        const variableNames = {
-            'reynold_number': 'Reynold Number',
-            'cf_number': 'Coefficient of Friction',
-            'froude_number': 'Froude Number',
-            'coefficientblock': 'Block Coefficient',
-            'shapecoef': 'Shape Coefficient',
-            'wetsurface': 'Wet Surface Area',
-            'resistancefriction': 'Frictional Resistance',
-            'crstd': 'Standard Frictional Resistance Coefficient',
-            'fcrit': 'Critical Froude Number',
-            'kfr': 'Frictional Resistance Coefficient',
-            'lengthfactor': 'Length Factor',
-            'Beamdraft': 'Beam to Draft Ratio',
-            'lengthbeam': 'Length to Beam Ratio',
-            'wettedratio': 'Wetted Surface Ratio',
-            'aftoverhang': 'Aft Overhang',
-            'trimcorrection': 'Trim Correction',
-            'propellerfactor': 'Propeller Factor',
-            'coefficientresidual': 'Residual Resistance Coefficient',
-            'resistanceresidual': 'Residual Resistance',
-            'resistancetotal': 'Total Resistance',
-            'power_propel': 'Propulsive Power',
-            'propeff': 'Propeller Efficiency',
-            'totalpower': 'Total Power',
-            'noe': 'Number of Engines',
-            'el': 'Engine Load',
-            'sfocrel': 'SFOC Relative',
-            'Sfoc': 'SFOC',
-            'FOC': 'Fuel Oil Consumption',
-            'gfoc': 'Gross Fuel Oil Consumption',
-            'kgfoc': 'Kilogram Fuel Oil Consumption',
-            'tfoc': 'Tonne Fuel Oil Consumption',
-            'LFO': 'Light Fuel Oil',
-            'MDO': 'Marine Diesel Oil'
-        };
+    <h2>Fuel Consumption</h2>
+    <table id="fuel-consumption-table">
+      <thead>
+        <tr>
+          <th>Vessel Speed</th>
+          <th>ME DN Margin</th>
+          <th>ME UP Margin</th>
+          <th>AE DN Margin</th>
+          <th>AE UP Margin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be inserted here by JavaScript -->
+      </tbody>
+    </table>
 
-        const tableBody = document.getElementById('valuesTable');
-
-        for (const key in variableNames) {
-            const value = localStorage.getItem(key);
-            const row = document.createElement('tr');
-            const cellKey = document.createElement('td');
-            const cellValue = document.createElement('td');
-
-            cellKey.textContent = variableNames[key];
-            cellValue.textContent = value;
-
-            row.appendChild(cellKey);
-            row.appendChild(cellValue);
-            tableBody.appendChild(row);
-        }
-    </script>
+    <h2>CII Grade</h2>
+    <table id="cii-grade-table">
+      <thead>
+        <tr>
+          <th>Vessel Speed</th>
+          <th>Year 1</th>
+          <th>Year 2</th>
+          <th>Year 3</th>
+          <th>Year 4</th>
+          <th>Year 5</th>
+          <th>Year 6</th>
+          <th>Year 7</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be inserted here by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+  <script src="scripts/result.js"></script>
 </body>
 </html>

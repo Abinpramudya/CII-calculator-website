@@ -1,4 +1,64 @@
-// script.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+import { getFirestore, collection, getDocs, addDoc} from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAMuLs8WnhMp3lsC1ZbcPnibA-mNiR3B18",
+  authDomain: "cii-web-calculator.firebaseapp.com",
+  projectId: "cii-web-calculator",
+  storageBucket: "cii-web-calculator.appspot.com",
+  messagingSenderId: "949662714907",
+  appId: "1:949662714907:web:dc89c0b95a3c09eb933cbe"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const colRef = collection(db,'kapal')
+
+// Fetch documents 
+getDocs(colRef)
+  .then((snapshot) => {
+    console.log("Fetched documents:", snapshot.docs.map(doc => doc.data()));
+  })
+  .catch((error) => {
+    console.error("Error fetching documents: ", error);
+  });
+
+
+
+//dummy values
+// const Name = "Jaladhimantri"
+// const VesselType = "Container-Vessel"
+// const LOA = 117
+// const LPP = 110
+// const LWL = LPP * 1.035
+// const LoS = 114
+// const B = 19.7
+// const T = 6.45
+// const H = 8.5
+// const DWT = 7664.6
+// const Displacement = 11129.6
+// var Vs = 13.8
+// const Dprop = 3.7
+// const Nrudder = 1
+// const Nthruster = 0
+// const TA = 5
+// const TF = 4
+
+// const pme = 3200
+// const sfoc = 182
+// const rpm = 169
+// const Pservice = 0.75
+// const foc_type = "HFO"
+
+// const auxpower = 180
+// const auxnum = 2
+// const auxfoc = 75
+// const route = 1
+var year = 2024;
+
+
 function reynoldnumber(Vs, LWL) {
   Vs = Vs * 0.5144;
 
@@ -8,6 +68,7 @@ function reynoldnumber(Vs, LWL) {
 
 function coefficientfriction(rey){
   cf = 0.075 / (Math.log10(rey) - 2) ** 2;
+  // var cf = 123;
   return cf
 }
 
@@ -138,7 +199,6 @@ function lengthfactor_cal(LPP,Nrudder){
     var e1 = 1.8319
     var e2 = -0.1237
   }
-  console.log('e1',e1)
   return e1 * (LPP ** e2)
 }
 
@@ -252,7 +312,7 @@ function propellerfactor_cal(D,TA,Nrudder){
     a6 = -0.1418
   }
 
-  ratio = D/TA
+  ratio = D/TA  
 
   if (ratio < 0.43){
     var  a = 0.43 ** a6
@@ -260,6 +320,7 @@ function propellerfactor_cal(D,TA,Nrudder){
 
   if (ratio >= 0.43 && ratio <= 0.84){
     var  a = (ratio) **a6
+
   }
 
   if (ratio > 0.84){
@@ -337,329 +398,557 @@ function SFOC_cal(sfocrel,sfoc){
 }
 
 function FOC_cal(pme){
-  ratio = 0.75
+  ratio = 0.85
   return pme * ratio
 }
 
-function route_def(route){
-  docking = 30
-  days = 365
-  avail = days - docking
-
-  //SUB-WIN-DIL-SUB
-  if (route === 1){
-    var distance = 1630	
-    var sailingTime = 118.1	
-    var Time1 = 30.9
-    var Time2 = 51.8
-    var Time3 = 41.8
-    var manuver1 = 9.4
-    var manuver2 = 2.3
-    var manuver3 = 2.6
-    var totalsail = 256.9
-    var maxvoyage = 32
+function EL_port_cal(vesseltype){
+  if (vesseltype === "General Cargo"){
+    el_port = 1.6
   }
 
-  // if (route === 2){
-  //   distance =
-  //   sailingTime =
-  //   Time1 =
-  //   Time2 =
-  //   Time3 =
-  //   manuver1 =
-  //   manuver2 =
-  //   manuver3 =
-  //   totalsail =
-  //   maxvoyage =
-  // }
-  // if (route === 3){
-  //   distance =
-  //   sailingTime =
-  //   Time1 =
-  //   Time2 =
-  //   Time3 =
-  //   manuver1 =
-  //   manuver2 =
-  //   manuver3 =
-  //   totalsail =
-  //   maxvoyage =
-  // }
-  // if (route === 4){
-  //   distance =
-  //   sailingTime =
-  //   Time1 =
-  //   Time2 =
-  //   Time3 =
-  //   manuver1 =
-  //   manuver2 =
-  //   manuver3 =
-  //   totalsail =
-  //   maxvoyage =
-  // }
-  // if (route === 5){
-  //   distance =
-  //   sailingTime =
-  //   Time1 =
-  //   Time2 =
-  //   Time3 =
-  //   manuver1 =
-  //   manuver2 =
-  //   manuver3 =
-  //   totalsail =
-  //   maxvoyage =
-  // }
-  // if (route === 6){
-  //   distance =
-  //   sailingTime =
-  //   Time1 =
-  //   Time2 =
-  //   Time3 =
-  //   manuver1 =
-  //   manuver2 =
-  //   manuver3 =
-  //   totalsail =
-  //   maxvoyage =
-  // }
-  // if (route === 7){
-  //   distance =
-  //   sailingTime =
-  //   Time1 =
-  //   Time2 =
-  //   Time3 =
-  //   manuver1 =
-  //   manuver2 =
-  //   manuver3 =
-  //   totalsail =
-  //   maxvoyage =
-  // }
-  // if (route === 8){
-  //   distance =
-  //   sailingTime =
-  //   Time1 =
-  //   Time2 =
-  //   Time3 =
-  //   manuver1 =
-  //   manuver2 =
-  //   manuver3 =
-  //   totalsail =
-  //   maxvoyage =
-  // }
-  // if (route === 9){
-  //   distance =
-  //   sailingTime =
-  //   Time1 =
-  //   Time2 =
-  //   Time3 =
-  //   manuver1 =
-  //   manuver2 =
-  //   manuver3 =
-  //   totalsail =
-  //   maxvoyage =
-  // }
-  // if (route === 10){
-  //   distance =
-  //   sailingTime =
-  //   Time1 =
-  //   Time2 =
-  //   Time3 =
-  //   manuver1 =
-  //   manuver2 =
-  //   manuver3 =
-  //   totalsail =
-  //   maxvoyage =
-  // }
-  // if (route === 11){
-  //   distance =
-  //   sailingTime =
-  //   Time1 =
-  //   Time2 =
-  //   Time3 =
-  //   manuver1 =
-  //   manuver2 =
-  //   manuver3 =
-  //   totalsail =
-  //   maxvoyage =
-  // }
-  
+  else{
+    el_port = 0.7
+  }
 
-}
-function FinalFO_cal(name, vesselType, LOA, LPP, LWL, LoS, B, T, H,Vs, Dprop, Nrudder, Nthruster, Nrudder, TA, TF, pme, sfoc, rpm, pservice){
-  var reynold_number = reynoldnumber(Vs,LWL);
-  var cf_number = coefficientfriction(reynold_number);
-  var froude_number = froudenumber(Vs,LWL);
-  var coefficientblock = coefficientblock_cal(froude_number)
-  var shapecoef = shapecoef_cal(LoS,LWL,LPP,coefficientblock,B,T,TA,TF,Dprop,Nrudder)
-  var wetsurface = wetsurface_cal(LPP,B,T,shapecoef)
-  var resistancefriction = resistancefriction_cal(cf_number,1025,wetsurface,Vs)
-  var crstd = coefficientFrictionResidual_cal(froude_number,coefficientblock,Nrudder)
-  var fcrit = fcrit_cal(Nrudder, coefficientblock)
-  var kfr = kfr_cal(fcrit,froude_number)
-  var lengthfactor = lengthfactor_cal(LPP,Nrudder)
-  var Beamdraft= beamdraft_cal(B,T,Nrudder)
-  var lengthbeam=lengthbeam_cal(LPP,B,Nrudder)
-  var wettedratio = wettedratio_cal(LoS,LWL,Nrudder)
-  var aftoverhang = aftoverhang_cal(LWL,LPP,Nrudder)
-  var trimcorrection = trimcorrection_cal(TA,TF,Nrudder,LPP)
-  var propellerfactor = propellerfactor_cal(Dprop,TA,Nrudder)
-  var coefficientresidual = coefresidual_cal(Nthruster,Nrudder,crstd,kfr,
-                                             lengthfactor,Beamdraft,lengthbeam,
-                                             wettedratio,aftoverhang,trimcorrection,
-                                             propellerfactor)
-  var resistanceresidual = resistanceresidual_cal(coefficientresidual,1025,Vs,B,T)
-  var resistancetotal = resistancetotal_cal(resistancefriction,resistanceresidual)
-  var power_propel = Ppropel_cal(resistancetotal,Vs)
-  var propeff = propeff_cal(LPP,rpm)
-  var totalpower = totalpower_cal(propeff,power_propel)
-  var noe = NoE_cal(totalpower,pme)
-  var el = EL_cal(totalpower,pme)
-  var sfocrel = SFOCrel_cal(el)
-  var Sfoc = SFOC_cal(sfocrel,sfoc)
-  var FOC = FOC_cal(pme)
-
-  
-  var gfoc = FOC * Sfoc
-  var kgfoc = gfoc / 1000
-  var tfoc = gfoc / 1000000
-  var LFO = tfoc / 0.991
-  var MDO = tfoc / 0.89
-
-
-  //logging
-  console.log('reynold_number:',reynold_number)
-  console.log('cf_number:',cf_number)
-  console.log('froude_number:',froude_number)
-  console.log('coefficient block:',coefficientblock)
-  console.log('shape coeff:',shapecoef)
-  console.log('wetsurface',wetsurface)
-  console.log('resistance friction:',resistancefriction)
-  console.log('coefficient friction:',crstd)
-  console.log('fcrit:',fcrit)
-  console.log("high froude number factor:",kfr)
-  console.log('lengthfactor:',lengthfactor)
-  console.log('beamdraft ratio factor:',Beamdraft)
-  console.log('length beam:',lengthbeam)
-  console.log('wetted ratio:',wettedratio)
-  console.log('aft overhang ratio:',aftoverhang)
-  console.log('trim correction:', trimcorrection)
-  console.log('propeller factor',propellerfactor)
-  console.log('coefficient residual:',coefficientresidual)
-  console.log('resistance residual:',resistanceresidual)
-  console.log('resistance total:',resistancetotal)
-  console.log('power propeller:',power_propel)
-  console.log('propeller efficiency:',propeff)
-  console.log('total power:',totalpower)
-  console.log('NoE:',noe)
-  console.log('EL:',el)
-  console.log('sfoc relative:',sfocrel)
-  console.log('sfoc calculation:',Sfoc)
-  console.log('FOC :',FOC)
-  console.log("gfoc:", gfoc);
-  console.log("kgfoc:", kgfoc);
-  console.log("tfoc:", tfoc);
-  console.log("LFO:", LFO);
-  console.log("MDO:", MDO);
-
-
-  // Store the values in local storage
-localStorage.setItem('reynold_number', reynold_number);
-localStorage.setItem('cf_number', cf_number);
-localStorage.setItem('froude_number', froude_number);
-localStorage.setItem('coefficientblock', coefficientblock);
-localStorage.setItem('shapecoef', shapecoef);
-localStorage.setItem('wetsurface', wetsurface);
-localStorage.setItem('resistancefriction', resistancefriction);
-localStorage.setItem('crstd', crstd);
-localStorage.setItem('fcrit', fcrit);
-localStorage.setItem('kfr', kfr);
-localStorage.setItem('lengthfactor', lengthfactor);
-localStorage.setItem('Beamdraft', Beamdraft);
-localStorage.setItem('lengthbeam', lengthbeam);
-localStorage.setItem('wettedratio', wettedratio);
-localStorage.setItem('aftoverhang', aftoverhang);
-localStorage.setItem('trimcorrection', trimcorrection);
-localStorage.setItem('propellerfactor', propellerfactor);
-localStorage.setItem('coefficientresidual', coefficientresidual);
-localStorage.setItem('resistanceresidual', resistanceresidual);
-localStorage.setItem('resistancetotal', resistancetotal);
-localStorage.setItem('power_propel', power_propel);
-localStorage.setItem('propeff', propeff);
-localStorage.setItem('totalpower', totalpower);
-localStorage.setItem('noe', noe);
-localStorage.setItem('el', el);
-localStorage.setItem('sfocrel', sfocrel);
-localStorage.setItem('Sfoc', Sfoc);
-localStorage.setItem('FOC', FOC);
-localStorage.setItem('gfoc', gfoc);
-localStorage.setItem('kgfoc', kgfoc);
-localStorage.setItem('tfoc', tfoc);
-localStorage.setItem('LFO', LFO);
-localStorage.setItem('MDO', MDO);
+  return el_port
 }
 
-function getForm(){
+function route_def(route) {
+  const docking = 30;
+  const days = 365;
+  const avail = days - docking;
+
+  let distance, sailingTime, Time1, Time2, Time3, manuver1, manuver2, manuver3, totalsail, maxvoyage;
+
+  if (route === 1) {
+      distance = 1630;
+      sailingTime = 118.1;
+      Time1 = 30.9;
+      Time2 = 51.8;
+      Time3 = 41.8;
+      manuver1 = 9.4;
+      manuver2 = 2.3;
+      manuver3 = 2.6;
+      totalsail = 256.9;
+      maxvoyage = 32;
+  } else if (route === 2) {
+      distance = 1177;
+      sailingTime = 85.3;
+      Time1 = 30.9;
+      Time2 = 51.8;
+      Time3 = 0.0;
+      manuver1 = 18.8;
+      manuver2 = 4.6;
+      manuver3 = 0.0;
+      totalsail = 191.4;
+      maxvoyage = 43;
+  } else if (route === 3) {
+      distance = 743;
+      sailingTime = 53.8;
+      Time1 = 27.9;
+      Time2 = 30.9;
+      Time3 = 0.0;
+      manuver1 = 10.3;
+      manuver2 = 3.3;
+      manuver3 = 0.0;
+      totalsail = 126.2;
+      maxvoyage = 64;
+  } else if (route === 4) {
+      distance = 824;
+      sailingTime = 59.7;
+      Time1 = 30.9;
+      Time2 = 28.7;
+      Time3 = 0.0;
+      manuver1 = 13.0;
+      manuver2 = 4.2;
+      manuver3 = 0.0;
+      totalsail = 136.5;
+      maxvoyage = 59;
+  } else if (route === 5) {
+      distance = 911;
+      sailingTime = 66.0;
+      Time1 = 30.9;
+      Time2 = 49.3;
+      Time3 = 0.0;
+      manuver1 = 10.6;
+      manuver2 = 6.3;
+      manuver3 = 0.0;
+      totalsail = 163.1;
+      maxvoyage = 50;
+  } else if (route === 6) {
+      distance = 1100;
+      sailingTime = 79.7;
+      Time1 = 27.9;
+      Time2 = 43.5;
+      Time3 = 0.0;
+      manuver1 = 6.0;
+      manuver2 = 3.2;
+      manuver3 = 0.0;
+      totalsail = 160.2;
+      maxvoyage = 51;
+  } else if (route === 7) {
+      distance = 984;
+      sailingTime = 71.3;
+      Time1 = 27.9;
+      Time2 = 45.8;
+      Time3 = 0.0;
+      manuver1 = 5.5;
+      manuver2 = 10.2;
+      manuver3 = 0.0;
+      totalsail = 160.7;
+      maxvoyage = 51;
+  } else if (route === 8) {
+      distance = 415;
+      sailingTime = 30.1;
+      Time1 = 30.9;
+      Time2 = 45.8;
+      Time3 = 0.0;
+      manuver1 = 10.7;
+      manuver2 = 11.4;
+      manuver3 = 0.0;
+      totalsail = 129.0;
+      maxvoyage = 63;
+  } else if (route === 9) {
+      distance = 1585;
+      sailingTime = 114.9;
+      Time1 = 30.9;
+      Time2 = 52.3;
+      Time3 = 0.0;
+      manuver1 = 12.8;
+      manuver2 = 12.9;
+      manuver3 = 0.0;
+      totalsail = 223.8;
+      maxvoyage = 36;
+  } else if (route === 10) {
+      distance = 1469;
+      sailingTime = 106.4;
+      Time1 = 30.9;
+      Time2 = 85.0;
+      Time3 = 51.8;
+      manuver1 = 10.7;
+      manuver2 = 4.1;
+      manuver3 = 5.2;
+      totalsail = 294.2;
+      maxvoyage = 28;
+  } else if (route === 11) {
+      distance = 1521;
+      sailingTime = 110.2;
+      Time1 = 30.9;
+      Time2 = 51.8;
+      Time3 = 0.0;
+      manuver1 = 9.4;
+      manuver2 = 2.3;
+      manuver3 = 0.0;
+      totalsail = 204.7;
+      maxvoyage = 40;
+  }
+  return { docking, days, avail, distance, sailingTime, Time1, Time2, Time3, manuver1, manuver2, manuver3, totalsail, maxvoyage };
+}
+
+function ae_sail_cal(auxfoc,el_sail,sailing,manuver1,manuver2,manuver3){
+ const total = sailing + manuver1 + manuver2 + manuver3
+ 
+ return auxfoc * 0.7 * total
+}
+
+function ae_port_cal(auxfoc,el_port,time1,time2,time3){
+  total = time1 + time2 + time3
+
+  return auxfoc * el_port * total
+}
+
+function totalsail_cal(time1,time2,time3,manuver1,manuver2,manuver3,saildistance,Vs){
+  sailtime = saildistance / Vs
+
+  total = time1 + time2 + time3 + manuver1 + manuver2 + manuver3 + sailtime
+  return total
+}
+
+function foc_total_cal(foctype,aesail,aeport,mesail,memnv){
+
+  if (foctype === "MDO"){
+    total = aesail + aeport + mesail + memnv
+  }
+
+  else {
+    total = mesail + memnv
+  }
+
+  return total
+}
+
+function cii_ref_cal(vesselType, dwt) {
+  if (vesselType === "Bulk-Carrier") {
+    if (dwt >= 279000) {
+      return { a: 4745, c: 0.622 };
+    } else {
+      return { a: 4745, c: 0.622 };
+    }
+  } else if (vesselType === "Gas-Carrier") {
+    if (dwt >= 65000) {
+      return { a: 144050000000, c: 2.071};
+    } else {
+      return { a: 8104, c: 0.639 };
+    }
+  } else if (vesselType === "Tanker") {
+    return { a: 5247, c: 0.61 };
+
+  } else if (vesselType === "Container-Vessel") {
+    return { a: 1984, c: 0.489 };
+
+  } else if (vesselType === "General-Cargo") {
+    if (dwt >= 20000) {
+      return { a: 31948, c: 0.792 };
+    } else {
+      return { a: 588, c: 0.3885 };
+    }
+  } else if (vesselType === "Refrigerated-Cargo-Carrier") {
+    return { a: 46000, c: 0.557 };
+
+  } else if (vesselType === "Combination-Carrier") {
+    return { a: 5119, c: 0.622 };
+
+  } else if (vesselType === "LNG-Carrier") {
+    if (dwt >= 100000) {
+      return { a: 9877, c: 0 };
+    } else {
+      return { a: 144790000000000, c: 1.45E+14 };
+    }
+
+  } else {
+    return { a: null, c: null };
+  }
+}
+
+function dd_ref_cal(vesselType, dwt) {
+  // Check the vessel type
+  if (vesselType === "Bulk-Carrier") {
+    return { d1: 0.86, d2: 0.94, d3: 1.06, d4: 1.18 };
+  } else if (vesselType === "Gas-Carrier") {
+    if (dwt >= 65000) {
+      return { d1: 0.81, d2: 0.91, d3: 1.12, d4: 1.44 };
+    } else {
+      return { d1: null, d2: null, d3: null, d4: null };
+    }
+  } else if (vesselType === "Gas-Carrier") {
+    if (dwt < 65000) {
+      return { d1: 0.85, d2: 0.95, d3: 1.06, d4: 1.25 };
+    } else {
+      return { d1: null, d2: null, d3: null, d4: null };
+    }
+  } else if (vesselType === "Tanker") {
+    return { d1: 0.82, d2: 0.93, d3: 1.08, d4: 1.28 };
+  } else if (vesselType === "Container-Vessel") {
+    return { d1: 0.83, d2: 0.94, d3: 1.07, d4: 1.19 };
+  } else if (vesselType === "General-Cargo") {
+    return { d1: 0.83, d2: 0.94, d3: 1.06, d4: 1.19 };
+  } else if (vesselType === "Refrigerated-Cargo") {
+    return { d1: 0.78, d2: 0.91, d3: 1.07, d4: 1.2 };
+  } else if (vesselType === "Combination-Carrier") {
+    return { d1: 0.87, d2: 0.96, d3: 1.06, d4: 1.14 };
+  } else if (vesselType === "LNG-Carrier") {
+    if (dwt >= 100000) {
+      return { d1: 0.89, d2: 0.98, d3: 1.06, d4: 1.13 };
+    } else {
+      return { d1: null, d2: null, d3: null, d4: null };
+    }
+  } else {
+    return { d1: null, d2: null, d3: null, d4: null };
+  }
+}
+
+function cii_req_cal(year,d1,d2,d3,d4,ciiref) {
+  if (year < 2020 || year > 2030) {
+    return null;
+  }
+  const data = {
+    2020: 0.01,
+    2021: 0.02,
+    2022: 0.03,
+    2023: 0.05,
+    2024: 0.07,
+    2025: 0.09,
+    2026: 0.11,
+    2027: 0.14,
+    2028: 0.17,
+    2029: 0.2,
+    2030: 0.23,
+  };
+
+  var a = data[year]
+  var b = (1-a) * ciiref
+
+  return {inferior_cii: b * d4,
+          upper_cii : b * d3,
+          lower_cii : b * d2,
+          superior_cii : b * d1}
+}
+
+function cii_grade_cal(currentCii, inferiorCii, upperCii, lowerCii, superiorCii) {
+  // Check if all reference CII values are provided
+  if (inferiorCii === undefined || upperCii === undefined || lowerCii === undefined || superiorCii === undefined) {
+    return "Error: Missing reference CII values";
+  }
+
+  // Check current CII against reference values
+  if (currentCii < superiorCii) {
+    return "A";
+  } else if (currentCii < lowerCii) {
+    return "B";
+  } else if (currentCii < upperCii) {
+    return "C";
+  } else if (currentCii < inferiorCii) {
+    return "D";
+  } else {
+    return "E";
+  }
+}
+
+function FinaHFO_cal(name, vesselType, DWT, LOA, LPP, LWL, LoS, B, T, H, Vs, Dprop, Nrudder, Nthruster, TA, TF, pme, sfoc, rpm,auxfoc,route, foc_type, year) {
+  const reynold_number = reynoldnumber(Vs, LWL);
+  const cf_number = coefficientfriction(reynold_number);
+  const froude_number = froudenumber(Vs, LWL);
+  const coefficientblock = coefficientblock_cal(froude_number);
+  const shapecoef = shapecoef_cal(LoS, LWL, LPP, coefficientblock, B, T, TA, TF, Dprop, Nrudder);
+  const wetsurface = wetsurface_cal(LPP, B, T, shapecoef);
+  const resistancefriction = resistancefriction_cal(cf_number, 1025, wetsurface, Vs);
+  const crstd = coefficientFrictionResidual_cal(froude_number, coefficientblock, Nrudder);
+  const fcrit = fcrit_cal(Nrudder, coefficientblock);
+  const kfr = kfr_cal(fcrit, froude_number);
+  const lengthfactor = lengthfactor_cal(LPP, Nrudder);
+  const Beamdraft = beamdraft_cal(B, T, Nrudder);
+  const lengthbeam = lengthbeam_cal(LPP, B, Nrudder);
+  const wettedratio = wettedratio_cal(LoS, LWL, Nrudder);
+  const aftoverhang = aftoverhang_cal(LWL, LPP, Nrudder);
+  const trimcorrection = trimcorrection_cal(TA, TF, Nrudder, LPP);
+  const propellerfactor = propellerfactor_cal(Dprop, TA, Nrudder);
+  const coefficientresidual = coefresidual_cal(Nthruster, Nrudder, crstd, kfr, lengthfactor, Beamdraft, lengthbeam, wettedratio, aftoverhang, trimcorrection, propellerfactor);
+  const resistanceresidual = resistanceresidual_cal(coefficientresidual, 1025, Vs, B, T);
+  const resistancetotal = resistancetotal_cal(resistancefriction, resistanceresidual);
+  const power_propel = Ppropel_cal(resistancetotal, Vs);
+  const propeff = propeff_cal(LPP, rpm);
+  const totalpower = totalpower_cal(propeff, power_propel);
+  const noe = NoE_cal(totalpower, pme);
+  const el = EL_cal(totalpower, pme);
+  const sfocrel = SFOCrel_cal(el);
+  const Sfoc = SFOC_cal(sfocrel, sfoc);
+  const FOC = FOC_cal(pme);
+
+  const gfoc = totalpower * Sfoc;
+  const kgfoc = gfoc / 1000;
+  const tfoc = gfoc / 1000000;
+
+  const elport = EL_port_cal(vesselType);
+  const elsail = 0.7;
+
+  const routes = route_def(route); // Assuming route_def() function returns the needed route data
+  const { docking, days, avail, distance, sailingTime, Time1, Time2, Time3, manuver1, manuver2, manuver3, totalsail, maxvoyage } = routes;
+  const sailtime = totalsail_cal(Time1, Time2, Time3, manuver1, manuver2, manuver3, distance, Vs);
+
+
+
+  const SailTime_AE = distance / Vs
+
+
+
+  const aesail = ae_sail_cal(auxfoc, elsail, SailTime_AE, manuver1, manuver2, manuver3);
+  const aeport = ae_port_cal(auxfoc, elport, Time1, Time2, Time3);
+
+  const max_voyage = Math.ceil((avail * 24)/sailtime);
+  const total_distance = max_voyage * distance;
+  const me_sail_mdo = (kgfoc / 890) * (distance/Vs) * 1000 * 2;
+  const me_sail_hfo = (kgfoc / 991) * (distance/Vs) * 1000 * 2;
+
+  const me_mnv_mdo = (kgfoc / 890) * (manuver1 + manuver2 + manuver3) * 1000 * 0.2;
+  const me_mnv_hfo = (kgfoc / 991) * (manuver1 + manuver2 + manuver3) * 1000 * 0.2;
+
+  if (foc_type === "MDO") {
+    var foctotal = foc_total_cal(foc_type, aesail, aeport, me_sail_mdo, me_mnv_mdo);
+    var foc_me = me_sail_mdo + me_mnv_mdo;
+  } else {
+    var foctotal = foc_total_cal(foc_type, aesail, aeport, me_sail_hfo, me_mnv_hfo);
+    var foc_me = me_sail_hfo + me_mnv_hfo;
+  }
+
+
+  const focae = aesail + aeport;
+  const margin_up_ae = focae * 1.03;
+  const margin_dn_ae = focae * 0.97;
+
+  const margin_up_me = foc_me * 1.10;
+  const margin_dn_me = foc_me * 0.9;
+
+  // Annual calculations
+  const annual_ae = (aesail + aeport) * max_voyage;
+  const annual_me = foc_me * max_voyage;
+
+  const ton_annual_ae = (annual_ae / 1000) * (890 / 1000);
+  const ton_annual_me = (annual_me / 1000) * (890 / 1000);
+
+  const ae_co2_emmission = ton_annual_ae * 3.206;
+  const me_co2_emmission = ton_annual_me * 3.206;
+
+  const co2_emmision = ae_co2_emmission + me_co2_emmission;
+
+  const attained_cii = (co2_emmision * (10 ** 6)) / (total_distance * DWT);
+
+  const { a, c } = cii_ref_cal(vesselType, DWT);
+  const cii_ref = a * (DWT ** ((c * -1)));
+
+  const refcal = dd_ref_cal(vesselType,DWT);
+  const {d1,d2,d3,d4} = refcal;
+
+
+  const cii_req = cii_req_cal(year, d1, d2, d3, d4, cii_ref);
+
+  const {inferior_cii,upper_cii,lower_cii,superior_cii} = cii_req;
+
+
+  const cii_grade = cii_grade_cal(attained_cii, inferior_cii, upper_cii, lower_cii, superior_cii);
+
+  const result = {
+    // Add year to the result object
+    year,
+    reynold_number,
+    cf_number,
+    froude_number,
+    coefficientblock,
+    shapecoef,
+    wetsurface,
+    resistancefriction,
+    crstd,
+    fcrit,
+    kfr,
+    lengthfactor,
+    Beamdraft,
+    lengthbeam,
+    wettedratio,
+    aftoverhang,
+    trimcorrection,
+    propellerfactor,
+    coefficientresidual,
+    resistanceresidual,
+    resistancetotal,
+    power_propel,
+    propeff,
+    totalpower,
+    noe,
+    el,
+    sfocrel,
+    Sfoc,
+    FOC,
+    gfoc,
+    kgfoc,
+    tfoc,
+    aesail,
+    aeport,
+    sailtime,
+    max_voyage,
+    total_distance,
+    me_sail_mdo,
+    me_sail_hfo,
+    me_mnv_mdo,
+    me_mnv_hfo,
+    foctotal,
+    foc_me,
+    focae,
+    margin_up_ae,
+    margin_dn_ae,
+    margin_up_me,
+    margin_dn_me,
+    annual_ae,
+    annual_me,
+    ton_annual_ae,
+    ton_annual_me,
+    ae_co2_emmission,
+    me_co2_emmission,
+    co2_emmision,
+    attained_cii,
+    cii_ref,
+    cii_grade
+  };
+
+  return result;
+}
+
+window.getForm = function(event) {
   event.preventDefault();
-  const shipData = document.getElementById("ship-data-form")
-  const MachineryData = document.getElementById("machinery-data-form")
-  const RouteData = document.getElementById("route-selection-form")
+  let initialSpeed = 13.8;
+  const startYear = 2024; // Starting year
+  const endYear = 2030; // Ending year
 
-  // Reading input values using JavaScript
+  localStorage.clear();
+
+  const shipData = document.getElementById("ship-data-form");
+  const machineryData = document.getElementById("machinery-data-form");
+  const routeData = document.getElementById("route-selection-form");
+
   const Name = shipData.querySelector('input[name="Vessel-Name"]').value;
   const VesselType = shipData.querySelector('select[name="vessel-type"]').value;
   const LOA = parseFloat(shipData.querySelector('input[name="LOA"]').value);
   const LPP = parseFloat(shipData.querySelector('input[name="LPP"]').value);
-  const LWL = LPP * 1.035
+  const LWL = LPP * 1.035;
   const LoS = parseFloat(shipData.querySelector('input[name="LoS"]').value);
   const B = parseFloat(shipData.querySelector('input[name="B"]').value);
   const T = parseFloat(shipData.querySelector('input[name="T"]').value);
   const H = parseFloat(shipData.querySelector('input[name="H"]').value);
   const DWT = parseFloat(shipData.querySelector('input[name="DWT"]').value);
-  const Vs = parseFloat(shipData.querySelector('input[name="Vs"]').value);
   const Dprop = parseFloat(shipData.querySelector('input[name="Dprop"]').value);
   const Nrudder = parseFloat(shipData.querySelector('input[name="Nrudder"]').value);
   const Nthruster = parseFloat(shipData.querySelector('input[name="Nthruster"]').value);
   const TA = parseFloat(shipData.querySelector('input[name="TA"]').value);
   const TF = parseFloat(shipData.querySelector('input[name="TF"]').value);
-  
-  const pme = parseFloat(MachineryData.querySelector('input[name="Pme"]').value);
-  const sfoc = parseFloat(MachineryData.querySelector('input[name="SFOC"]').value);
-  const rpm = parseFloat(MachineryData.querySelector('input[name="RPM"]').value);
-  const Pservice = parseFloat(MachineryData.querySelector('input[name="Pservice"]').value);
 
-  // const route = RouteData.querySelector('input[name="route"]').value;
+  const foc_type = machineryData.querySelector('select[name="fuel-type"]').value;
+  const pme = parseFloat(machineryData.querySelector('input[name="Pme"]').value);
+  const sfoc = parseFloat(machineryData.querySelector('input[name="SFOC"]').value);
+  const rpm = parseFloat(machineryData.querySelector('input[name="RPM"]').value);
+  const auxfoc = parseFloat(machineryData.querySelector('input[name="aux-foc"]').value);
 
-  FinalFO_cal(Name,VesselType,LOA,LPP,LWL,LoS,B,T,H,Vs,Dprop,Nrudder,Nthruster,Nrudder,TA,TF,pme,sfoc,rpm,Pservice)
-  window.location.href = 'results.html';
+  const route = parseInt(routeData.querySelector('select[name="route"]').value);
+
+  localStorage.setItem('initial_speed', initialSpeed);
+
+  for (let year = startYear; year <= endYear; year++) {
+    let Vs = initialSpeed;
+    for (let i = 0; i < 8; i++) {
+      const result = FinaHFO_cal(Name, VesselType, DWT, LOA, LPP, LWL, LoS, B, T, H, Vs, Dprop, Nrudder, Nthruster, TA, TF, pme, sfoc, rpm, auxfoc, route, foc_type, year);
+
+      // Store each iteration's results in local storage with a unique key
+      const prefix = `result_${year}_${i}_`;
+      for (const [key, value] of Object.entries(result)) {
+        localStorage.setItem(`${prefix}${key}`, value);
+      }
+
+      // Log the results
+      console.log(`Year ${year} - Speed iteration ${i + 1}`);
+      for (const [key, value] of Object.entries(result)) {
+        console.log(`${key}:`, value);
+      }
+
+      // Add result to Firebase Firestore
+      addDoc(colRef, {
+        year: year,
+        iteration: i + 1,
+        ...result
+      }).then(() => {
+        console.log("Document successfully written!");
+      }).catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+
+      // Reduce Vs by 1 for the next iteration
+      Vs -= 1;
+    }
+  }
+
+  window.open('results.html', '_blank');
 }
 
+// Attach the getForm function to the form submission event
+document.getElementById("submit-form").addEventListener("click", getForm);
 
-  //dummy values
-  // const Name = "Jaladhimantri"
-  // const VesselType = "General Cargo"
-  // const LOA = 117
-  // const LPP = 110
-  // const LWL = LPP * 1.035
-  // const LoS = 114
-  // const B = 19.7
-  // const T = 6.45
-  // const H = 8.5
-  // const DWT = 7664.6
-  // const Displacement = 11129.6
-  // const Vs = 13.8
-  // const Dprop = 3.7
-  // const Nrudder = 1
-  // const Nthruster = 0
-  // const Nrudder = 1
-  // const TA = 4
-  // const TF = 5
-
-  // const pme = 3200
-  // const sfoc = 182
-  // const rpm = 168.717948717949
-  // const Pservice = 0.75
-
-  // route = 1
-
-    
   // Store result in local storage
   // localStorage.setItem('reynold_number', reynold_number);
   // localStorage.setItem('cf_number',cf_number)

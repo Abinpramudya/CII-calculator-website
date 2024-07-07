@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ships List</title>
+  <link rel="stylesheet" href="css/shipList.css">
+</head>
+<body>
+  <div class="container">
+    <h1>List of Ships</h1>
+    <div id="loading" class="loading"></div>
+    <button id="add-ship-btn">Add New Ship</button>
+    <ul id="ship-list" class="ship-list">
+      <!-- Ships will be dynamically added here -->
+    </ul>
+  </div>
+  <script>
+    document.getElementById('add-ship-btn').addEventListener('click', function() {
+        window.location.href = 'addNewShip.html'; // Navigate to addNewShip.html
+    });
+  </script>
+  <script src="scripts/shipList.js" type="module"></script>
+</body>
+</html>

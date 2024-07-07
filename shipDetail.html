@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ship Details</title>
+  <link rel="stylesheet" href="css/shipDetail.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Ship Details</h1>
+    <div id="loading" class="loading"></div>
+    <div id="ship-details" class="ship-details">
+      <!-- Ship details will be dynamically added here -->
+    </div>
+    <button id="back-btn">Back to List</button>
+  </div>
+  <script>
+    document.getElementById('back-btn').addEventListener('click', function() {
+        window.location.href = 'shipList.html'; // Navigate to shipList.html
+    });
+  </script>
+  <script src="scripts/shipDetail.js" type="module"></script>
+</body>
+</html>
