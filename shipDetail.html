@@ -5,15 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ship Details</title>
   <link rel="stylesheet" href="css/shipDetail.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <div class="container">
     <h1>Ship Details</h1>
     <div id="loading" class="loading"></div>
+    <button id="back-btn" class="icon-btn"><i class="fas fa-arrow-left"></i></button>
+    <button id="delete-btn" class="icon-btn"><i class="fas fa-trash"></i></button>
     <div id="ship-details" class="ship-details">
       <!-- Ship details will be dynamically added here -->
     </div>
-    <button id="back-btn">Back to List</button>
   </div>
   <script>
     document.getElementById('back-btn').addEventListener('click', function() {

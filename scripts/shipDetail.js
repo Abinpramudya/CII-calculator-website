@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+import { getFirestore, doc, getDoc,deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const shipSnap = await getDoc(shipDoc);
             loadingElement.style.display = 'none';
             if (shipSnap.exists()) {
-                displayShipDetails(shipSnap.data());
+                displayShipDetails(shipSnap.data(), shipId);
             } else {
                 loadingElement.textContent = 'No such document!';
             }
@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-function displayShipDetails(shipData) {
+function displayShipDetails(shipData, shipId) {
     const shipDetails = document.getElementById('ship-details');
-    
+
     const vesselTypeLabel = mapVesselType(shipData.VesselType);
     const routeLabel = mapRoute(shipData.route);
     const fuelTypeLabel = mapFuelType(shipData.foc_type);
@@ -70,6 +70,20 @@ function displayShipDetails(shipData) {
         <p><strong>Aux Fuel Consumption:</strong> ${shipData.auxfoc}</p>
         <p><strong>Initial Speed:</strong> ${shipData.initialSpeed}</p>
     `;
+
+    const deleteButton = document.getElementById('delete-btn');
+    deleteButton.addEventListener('click', async () => {
+        if (confirm('Are you sure you want to delete this ship?')) {
+            try {
+                await deleteDoc(doc(db, 'kapal', shipId));
+                alert('Ship deleted successfully.');
+                window.location.href = 'shipList.html';
+            } catch (error) {
+                console.error("Error deleting document: ", error);
+                alert('Error deleting ship. Please try again.');
+            }
+        }
+    });
 }
 
 // Function to map vessel type to more descriptive labels
